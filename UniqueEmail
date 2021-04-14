@@ -1,0 +1,77 @@
+//Rextester.Program.Main is the entry point for your code. Don't change it.
+//Microsoft (R) Visual C# Compiler version 2.9.0.63208 (958f2354)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace Rextester
+{
+    public class Program
+    {
+        
+        public static  void Main(string[] args)
+        {
+            string[] em={"team1@somewhere.com","team.1+bob@somewhere.com","team1+jill+bob@somewhere.com","team2@somewhere.com","team2@some.where.com","first.m.last@somewhere.com","firstmlast@somewhere.com"};
+            //Your code goes here
+            Console.WriteLine("Hello, world!");
+            
+            
+     
+            
+            int c=NumberOfUniqueEmailAddresses(em);
+            
+            Console.WriteLine(c);
+            
+        }
+        
+        public static int NumberOfUniqueEmailAddresses(string[] emails){
+            
+            int c=0;
+            string[] uniqueEmails=new string[emails.Count()];
+            
+            string domain;
+            string nameem;
+            
+            for (int i=0; i<emails.Count(); i++){
+                nameem=emails[i].Substring(0,emails[i].IndexOf("@"));
+                domain=emails[i].Substring(emails[i].IndexOf("@")+1);
+                nameem=nameem.Replace(".", "");
+               // nameem=nameem.Substring(0,nameem.IndexOf('+'));
+                if (nameem.IndexOf('+')>0) {
+                    nameem=nameem.Substring(0,nameem.IndexOf('+'));
+                }
+                 
+                uniqueEmails[i]=nameem+domain;
+                  
+            }
+            
+             for(int i=0; i<uniqueEmails.Count();i++)  
+            {  
+                bool isDuplicate = false;  
+                 
+                for(int j=0;j<i;j++)  
+                {  
+                    if(uniqueEmails[i] == uniqueEmails[j])  
+                    {  
+                        isDuplicate = true;  
+                   
+                    }  
+                }  
+  
+                if(!isDuplicate)  
+                {  
+                   c++;
+                      
+                }  
+               //  Console.WriteLine(uniqueEmails[i]);
+            }  
+            
+            
+            return c;
+        }
+        
+        
+    }
+}
