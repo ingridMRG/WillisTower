@@ -1,0 +1,151 @@
+//Rextester.Program.Main is the entry point for your code. Don't change it.
+//Microsoft (R) Visual C# Compiler version 2.9.0.63208 (958f2354)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace Rextester
+{
+    public class Program
+    {
+        public static string[,] board ;
+        public static int n;
+        public static int w=0;
+        public static int player;
+        
+        public static void Main(string[] args)
+        {
+            //Your code goes here
+            Console.WriteLine("******TIC TAC TOE*****");
+            
+             Console.WriteLine("Enter board dimension nxn ");
+        
+        
+        
+             n = Int32.Parse( Console.ReadLine() );
+            board  = new string[n,n];
+            int count_turns=1;
+            
+            int col,row;
+              
+            while (w==0 && count_turns<(n*n)){
+                player =count_turns%2!=0 ? 1: 2; // assign player 1 or 2
+                
+                 Console.WriteLine("Player "+ player);
+                
+                Console.WriteLine(" Enter row # ");
+                 row = Int32.Parse( Console.ReadLine() );
+                
+                Console.WriteLine(" Enter column # ");
+                 col = Int32.Parse( Console.ReadLine() );
+                
+                 w=PlacePiece(row,col,player);
+                 count_turns++;
+            
+            }
+            
+            if (w==1){
+              Console.WriteLine("****PLAYER "+player+"  Y O U  W O N!!!*****");
+            }else{
+             Console.WriteLine("Nobody Won");
+            
+            }
+              
+                
+
+        }
+
+        /// <summary>
+        /// Place a piece on the game 
+        
+        
+        
+        /// </summary>
+        /// <param name="row">row to place a piece</param> 0...n-1
+        /// <param name="col">column to place a piece</param>
+        /// <param name="player">the player (1 or 2) the piece is for</param>
+        /// <returns>0 = no winner, 1 = player 1 won, 2 = player 2 won</returns>
+        public static int PlacePiece(int row, int col, int player)
+        {
+           
+                int winner=0;
+                int dimension=n;
+
+                 board[row,col]= player==1 ? "X" : "O";
+
+                //Rows check
+                for(int i=0;i<dimension-1; i++){
+
+                    if (board[row,i]==board[row,i+1] && board[row,i] !=null && board[row,i+1] !=null ){
+                         winner++;
+
+                      //  Console.WriteLine("Rows check winner board [row "+row+", i ]"+i+"="+board[row,i]+" equal to "+board[row,i+1]);
+
+                    }
+                }
+
+              //  Console.WriteLine("Rows check winner "+winner+" dimension "+dimension);
+
+                 if(winner==dimension-1){
+                    return 1;
+                }else{
+                     //Column check
+                       winner=0;
+                      for(int i=0;i<dimension-1; i++){
+
+                        if (board[i,col]==board[i+1,col] && board[i,col]!=null && board[i+1,col]!=null ){
+                             winner++;
+                        }
+                    }
+                     //Console.WriteLine("Column check winner "+winner+" dimension "+dimension);
+
+                    if(winner==dimension-1){
+                        return 1;
+                    }else{
+                        winner=0;
+
+                       //diagonal
+
+                          for(int i=0;i<dimension-1; i++){
+
+                            if (board[i,i]==board[i+1,i+1] && board[i,i]!=null && board[i+1,i+1]!=null){
+                                 winner++;
+                            }
+                          }
+
+                         //Console.WriteLine("Diagonal check winner "+winner+" dimension "+dimension);
+                         if(winner==dimension-1){
+                            return 1;
+                        }else{
+                            winner=0;
+
+                                //back diagonal
+
+                              for(int i=0;i<dimension-1; i++){
+
+                                if (board[i,dimension-i-1]==board[i+1,dimension-i-2] && board[i,dimension-i-1]!=null && board[i+1,dimension-i-2]!=null ){
+                                     winner++;
+                                }
+                            }
+
+                             //Console.WriteLine("Back Diagonal check winner "+winner+" dimension "+dimension);
+                         }
+
+                    }
+                 }
+
+
+                  if(winner==dimension-1){
+                            return 1;
+                        }else{
+                      return 0;
+                  }
+                  // return 0;
+            
+		
+        }
+
+    }
+}
