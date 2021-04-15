@@ -1,0 +1,4 @@
+SELECT email
+FROM Employee
+GROUP BY email
+HAVING count(employeeId )>1
